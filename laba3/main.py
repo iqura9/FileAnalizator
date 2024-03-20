@@ -20,7 +20,7 @@ ax.grid(axis='y')
 ax.set_xticklabels(labels=file_size_counts.index, rotation=0, ha='center')
 
 for i, v in enumerate(file_size_counts.values):
-    ax.text(i, v, str(v), ha='center', va='bottom', rotation=0)
+    ax.text(i, v, str(v), ha='center', va='bottom', rotation=0) 
 
 ax_slider = plt.axes([0.15, 0.01, 0.7, 0.03])
 slider = Slider(ax_slider, 'Кількість файлів', 25, max(file_size_counts), valinit=max(file_size_counts), valstep=25)
