@@ -11,6 +11,9 @@ file_sizes['size_interval'] = pd.cut(file_sizes['size'], bins=intervals, labels=
 
 file_size_counts = file_sizes['size_interval'].value_counts().sort_index()
 
+total_sizes_mb = file_sizes.groupby('size_interval')['size'].sum() / (1024 * 1024)
+total_sizes_gb = total_sizes_mb / 1024
+
 fig, ax = plt.subplots(figsize=(10, 9))
 bar_plot = ax.bar(file_size_counts.index, file_size_counts.values, color='skyblue')
 ax.set_title(f'Гістограма кількості файлів за їх розміром (усього {len(file_sizes)} файлів)')
@@ -35,7 +38,7 @@ slider.on_changed(update)
 conclusions = []
 for interval, count in zip(labels, file_size_counts.values):
     percentage = count / len(file_sizes) * 100
-    conclusion = f"({percentage:.2f}%) файлів ({count}) має розміри у діапазоні {interval}."
+    conclusion = f"Переважна більшість файлів ({percentage:.2f}%) має розміри у діапазоні {interval}. Загальний обсяг: {total_sizes_mb[interval]:.2f} MB ({total_sizes_gb[interval]:.2f} GB)"
     conclusions.append((interval, percentage, conclusion))
 
 conclusions.sort(key=lambda x: x[1], reverse=True)
